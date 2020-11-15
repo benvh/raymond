@@ -393,6 +393,5 @@ func equalHelper(a interface{}, b interface{}, options *Options) interface{} {
 	if Str(a) == Str(b) {
 		return options.Fn()
 	}
-
-	return ""
+	return options.Inverse()
 }
