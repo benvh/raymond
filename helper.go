@@ -32,6 +32,10 @@ func init() {
 	RegisterHelper("log", logHelper)
 	RegisterHelper("lookup", lookupHelper)
 	RegisterHelper("equal", equalHelper)
+	RegisterHelper("gt", greaterThanHelper)
+	RegisterHelper("lt", lessThanHelper)
+	RegisterHelper("gte", greaterThanOrEqualHelper)
+	RegisterHelper("lte", lessThanOrEqualHelper)
 }
 
 // RegisterHelper registers a global helper. That helper will be available to all templates.
@@ -391,6 +395,38 @@ func lookupHelper(obj interface{}, field string, options *Options) interface{} {
 // Ref: https://github.com/aymerick/raymond/issues/7
 func equalHelper(a interface{}, b interface{}, options *Options) interface{} {
 	if Str(a) == Str(b) {
+		return options.Fn()
+	}
+	return options.Inverse()
+}
+
+// #gt helper
+func greaterThanHelper(a interface{}, b interface{}, options *Options) interface{} {
+	if Float(a) > Float(b) {
+		return options.Fn()
+	}
+	return options.Inverse()
+}
+
+// #lt helper
+func lessThanHelper(a interface{}, b interface{}, options *Options) interface{} {
+	if Float(a) < Float(b) {
+		return options.Fn()
+	}
+	return options.Inverse()
+}
+
+// #gte helper
+func greaterThanOrEqualHelper(a interface{}, b interface{}, options *Options) interface{} {
+	if Float(a) >= Float(b) {
+		return options.Fn()
+	}
+	return options.Inverse()
+}
+
+// #lte helper
+func lessThanOrEqualHelper(a interface{}, b interface{}, options *Options) interface{} {
+	if Float(a) <= Float(b) {
 		return options.Fn()
 	}
 	return options.Inverse()
